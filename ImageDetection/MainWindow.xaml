@@ -12,9 +12,10 @@
         <Button x:Name="BrowseButton" Content="Browse a file" HorizontalAlignment="Left"   
                 Margin="485,13,0,0" VerticalAlignment="Top" Width="121" Click="BrowseButton_Click"   
                 RenderTransformOrigin="1.047,0.821" Height="40"/>
-        <TextBlock HorizontalAlignment="Left" Height="282" Margin="30,96,0,0"   
-                   TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"  
-                   Width="703" Name="TextBlock1"/>
+        <TextBox HorizontalAlignment="Left" Height="282" FontSize="20" Margin="408,81,0,0"   
+                   TextWrapping="Wrap" Text="" VerticalAlignment="Top"  
+                   Width="350" Name="TextBlock1"/>
         <Button x:Name="button" Content="Find Text" HorizontalAlignment="Right" Height="40" Margin="0,13,34,0" VerticalAlignment="Top" Width="123" Click="button_Click"/>
+        <Image x:Name="imageshow" Margin="30,81,0,56" HorizontalAlignment="Left" Width="360"/>
     </Grid>
 </Window>

@@ -13,7 +13,7 @@ namespace ImageDetection
 
     public class Resp
     {
-        public TextAnn[] textAnn { get; set; }
+        public TextAnn[] textAnnotations { get; set; }
     }
 
     public class TextAnn

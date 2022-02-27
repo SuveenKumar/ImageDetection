@@ -28,10 +28,10 @@ namespace ImageDetection
         public MainWindow()
         {
             InitializeComponent();
-            ApiControl x = new ApiControl();
-         //   Task<ApiModel> y = x.Get();
-           // ans=y.Result.responses[0].textAnn[0].description;
-           // Upload();
+           
+           
+      //      Console.WriteLine(y);
+          //  ans=y.Result.responses[0].textAnn[0].description;
         }
         public void Upload()
         {
@@ -60,12 +60,19 @@ namespace ImageDetection
             {
                 FileNameTextBox.Text = openFileDlg.FileName;
                 path = openFileDlg.FileName;
+                imageshow.Source = new BitmapImage(new Uri(path));
             }
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            Upload();
+             Upload();
+            string str = path.Substring(14,(path.Length)-14);
+            Console.WriteLine(str.Length);
+            ApiControl x = new ApiControl(str);
+            ApiModel y = x.value;
+            ans = y.responses[0].textAnnotations[0].description;
+
             TextBlock1.Text = ans;
         }
     }

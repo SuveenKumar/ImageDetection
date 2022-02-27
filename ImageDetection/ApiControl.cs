@@ -34,25 +34,27 @@ namespace ImageDetection
 
     public class ApiControl
     {
-        public Model ModelX{get;set;}
-        public ApiControl()
+        public ApiModel value { get; set; }
+        public Model give { get; set; }
+        public ApiControl(string fileName)
         {
+            string fname = "gs://osssk/" + fileName;
             var model = new Model();
 
             var feat = new Features() { type = "TEXT_DETECTION" };
-            var req = new Requests() {features=new Features[1], image = new Images() { source = new Sources() { imageUri = "gs://osssk/Eminem.jpg" } } };
+            var req = new Requests() {features=new Features[1], image = new Images() { source = new Sources() { imageUri = fname } } };
             req.features[0] = feat;
 
             model.requests = new Requests[1];
             model.requests[0] = req;
-            ModelX = model;
-           // Get(model);
+            give = model;
+            Get(give);
         }
 
-        public async Task<ApiModel> Get()
+        public void Get(Model post)
         {
             // Serialize our concrete class into a JSON String
-            var stringPayload = JsonConvert.SerializeObject(ModelX);
+            var stringPayload = JsonConvert.SerializeObject(post);
 
             // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
             var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
@@ -60,17 +62,12 @@ namespace ImageDetection
             var httpClient = new HttpClient();
 
             // Do the actual request and await the response
-            var httpResponse = await httpClient.PostAsync("https://eu-vision.googleapis.com/v1/images:annotate?key=AIzaSyBcax1jrYgIYpEnFsfWv97Btijgl7AIO38", httpContent);
+            var httpResponse = httpClient.PostAsync("https://eu-vision.googleapis.com/v1/images:annotate?key=AIzaSyBcax1jrYgIYpEnFsfWv97Btijgl7AIO38", httpContent);
+            var responseContent =  httpResponse.Result.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<ApiModel>(responseContent.Result);
+            value = user;
+           
 
-            // If the response contains content we want to read it!
-            if (httpResponse.Content != null)
-            {
-                var responseContent = await httpResponse.Content.ReadAsStringAsync();
-                ApiModel info = JsonConvert.DeserializeObject<ApiModel>(responseContent);
-                Console.WriteLine(responseContent);
-                return info;
-            }
-            return null;
         } 
     }
 }
